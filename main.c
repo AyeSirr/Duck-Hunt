@@ -3,16 +3,21 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <time.h>
-#include "structures.h"
+#include "structs.h"
 #include "menuu.h"
 #define ScreenW 800
 #define ScreenH 600
-
+/**
+ * \brief Funkcja uruchamiajaca program.
+ * \brief Funkcja zawiera inicjacje biblioteki allegro - czcionki, audio, bitmapy, timer, itp.
+ */
 int main()
 {
-    float FPS = 60;
     srand(time(NULL));
+    float FPS = 60;
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT_QUEUE *eventQueue = NULL;
@@ -31,6 +36,9 @@ int main()
     al_init_font_addon();
     al_init_ttf_addon();
     al_init_image_addon();
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(1);
     al_hide_mouse_cursor(display);
     al_install_keyboard();
     al_install_mouse();

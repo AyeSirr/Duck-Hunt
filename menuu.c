@@ -1,4 +1,4 @@
-#include "structures.h"
+#include "structs.h"
 #include "menuu.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,12 +11,22 @@
 #include <allegro5/allegro_acodec.h>
 #define ScreenW 800
 #define ScreenH 600
-
+/**
+ * Wspólrzedne pola rozpoczynajacego gre.
+ */
 #define start posx < 490 && posx > 315 && posy < 230 && posy > 175
-
+/**
+ * Wspólrzedne pola zamykajacego gre.
+ */
 #define exitx posx < 420 && posx > 380 && posy < 472 && posy > 435
-
+/**
+ * Wspólrzedne pola pokazujacego ranking.
+ */
 #define ranking posx < 450 && posx > 350 && posy < 315 && posy > 280
+/**
+ * \brief Funkcja zwracajaca na podstawie pozycji kursora wartosc, która bedzie uzywana do wyboru opcji gry.
+ *
+ */
 int Option(int posx, int posy)
 {
     if(start)
@@ -32,6 +42,11 @@ int Option(int posx, int posy)
         return 3;
     }
 }
+
+/**
+ * \brief Funkcja uruchamiajaca menu gry.
+ *
+ */
 void GotoMenu(struct Bitmaps bitmap, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_DISPLAY *display,  ALLEGRO_TIMER *timer)
 {
     bool check = false;
@@ -45,7 +60,7 @@ void GotoMenu(struct Bitmaps bitmap, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_DI
         al_draw_text(bitmap.font72b, al_map_rgb(150,0,0), ScreenW/2, ScreenH/4.5, ALLEGRO_ALIGN_CENTER, "NEW GAME");
         al_draw_text(bitmap.font48b, al_map_rgb(150,0,0), ScreenW/2, ScreenH/2.5, ALLEGRO_ALIGN_CENTER, "RANKING");
         al_draw_text(bitmap.font48b, al_map_rgb(150,0,0), ScreenW/2, ScreenH/1.4, ALLEGRO_ALIGN_CENTER, "END");
-
+        al_play_sample(bitmap.Music1, 0.4, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 		if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
 			check = true;
@@ -59,9 +74,12 @@ void GotoMenu(struct Bitmaps bitmap, ALLEGRO_EVENT_QUEUE *eventQueue, ALLEGRO_DI
 		{
                 if(Option(posx,posy)==1){
                     check = true;
+                    al_stop_samples();
                     GotoGame(bitmap, eventQueue, timer, display);}
                     if(Option(posx,posy)==2)
                     check = true;
+                    if(Option(posx,posy)==3){
+                    odczyt();}
 
 
 		}
